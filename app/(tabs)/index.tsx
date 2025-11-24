@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, ImageSourcePropType } from 'react-native';
 import { Link } from 'expo-router';  
 import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
@@ -8,12 +8,15 @@ import ImageViewer from '@/components/ImageViewer';
 
 import IconButton from '@/components/IconButton';
 import CircleButton from '@/components/CircleButton';
-
+import EmojiPicker from '@/components/EmojiPicker';
+import EmojiList from '@/components/EmojiList';
 
 const PlaceholderImage = require('@/assets/images/medicine.jpg');
 export default function Index() {
   const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | undefined>(undefined);
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -34,9 +37,13 @@ export default function Index() {
     setShowAppOptions(false);
   };
 
-  const onAddSticker = () => {
-    // we will implement this later
-  };
+    const onAddSticker = () => {
+        setIsModalVisible(true);
+    };
+
+    const onModalClose = () => {
+        setIsModalVisible(false);
+    };
 
   const onSaveImageAsync = async () => {
     // we will implement this later
@@ -65,6 +72,9 @@ export default function Index() {
           <Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
         </View>
       )}
+      <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
+        <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
+      </EmojiPicker>
     </View>
   );
 }
