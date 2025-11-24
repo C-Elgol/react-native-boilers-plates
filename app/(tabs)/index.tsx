@@ -11,6 +11,7 @@ import CircleButton from '@/components/CircleButton';
 import EmojiPicker from '@/components/EmojiPicker';
 import EmojiList from '@/components/EmojiList';
 import EmojiSticker from '@/components/EmojiSticker';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const PlaceholderImage = require('@/assets/images/medicine.jpg');
 export default function Index() {
@@ -51,15 +52,18 @@ export default function Index() {
   };
 
   return (
+  <GestureHandlerRootView style={{ flex: 1 }}>
     <View style={styles.container}>
         <Text style={styles.text}>This ia you medication home screen</Text>
       <Link href="/about" style={styles.button}>
         Go to About screens
       </Link>
+      
       <View style={styles.imageContainer}>
         <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
-        {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        {pickedEmoji && <EmojiSticker imageSize={100} stickerSource={pickedEmoji} />}
       </View>
+
       {showAppOptions ? (
         <View style={styles.optionsContainer}>
           <View style={styles.optionsRow}>
@@ -74,11 +78,13 @@ export default function Index() {
           <Button label="Use this photo" onPress={() => setShowAppOptions(true)} />
         </View>
       )}
+
       <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
         <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
     </View>
-  );
+  </GestureHandlerRootView>
+);
 }
 
 const styles = StyleSheet.create({
