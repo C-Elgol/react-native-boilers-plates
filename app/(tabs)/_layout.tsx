@@ -9,12 +9,12 @@ export default function TabLayout() {
     screenOptions={{
         tabBarActiveTintColor: '#ffd33d',
         headerStyle: {
-        backgroundColor: '#25292e',
+        backgroundColor: '#1c8648ff',
         },
         headerShadowVisible: false,
         headerTintColor: '#fff',
         tabBarStyle: {
-        backgroundColor: '#25292e',
+        backgroundColor: '#087435ff',
         },
     }}
     >
@@ -35,6 +35,23 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24}/>
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="services"
+        options={{
+          title: 'services',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'construct' : 'construct-outline'} size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="pricing"
+        options={{
+          title: 'pricing',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'pricetag' : 'pricetag-outline'} size={24} color={color} />),
         }}
       />
     </Tabs>
