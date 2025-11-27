@@ -42,6 +42,20 @@ export default function Sidebar({ onClose }: { onClose: () => void }) {
           <Text style={styles.text}>Contact</Text>
         </TouchableOpacity>
       </Link>
+
+      <Link href="/login" asChild>
+        <TouchableOpacity style={styles.item} onPress={onClose}>
+          <Ionicons name="briefcase-outline" size={22} />
+          <Text style={styles.text}>Logine</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/register" asChild>
+        <TouchableOpacity style={styles.item} onPress={onClose}>
+          <Ionicons name="pricetag-outline" size={22} />
+          <Text style={styles.text}>Registerr</Text>
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 }
