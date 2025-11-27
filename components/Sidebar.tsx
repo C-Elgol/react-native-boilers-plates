@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   sidebar: {
     width: 260,
     height: "100%",
-    backgroundColor: "#05d110ff",
+    backgroundColor: "#fff",
     paddingTop: 50,
     paddingHorizontal: 20,
     borderRightWidth: 1,

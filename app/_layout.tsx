@@ -38,7 +38,12 @@ export default function RootLayout() {
               onPress={openSidebar}
             />
           ),
-          headerTitle: "",
+          headerTitle: "Medication Reminder",
+          headerStyle: {
+
+            backgroundColor: "#1c8648ff", // <-- Change header background color here
+          },
+          headerTintColor: "#fff", // Optional: change title and icons color
         }}
       />
 

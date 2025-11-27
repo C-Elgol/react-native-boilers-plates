@@ -54,6 +54,15 @@ export default function TabLayout() {
             <Ionicons name={focused ? 'pricetag' : 'pricetag-outline'} size={24} color={color} />),
         }}
       />
+      <Tabs.Screen
+        name="contact"
+        options={{
+          title: 'contact',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? 'mail' : 'mail-outline'} size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
