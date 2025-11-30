@@ -1,30 +1,69 @@
 // app/(auth)/login.tsx
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
+
+import { loginUser } from "../services/auth";
 
 export default function LoginScreen() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleLogin() {
+    if (!email || !password) {
+      Alert.alert("Missing Fields", "Please enter both email and password.");
+      return;
+    }
+
+    setLoading(true);
+
+    const result = await loginUser(email.trim(), password);
+
+    setLoading(false);
+
+    if (!result.success) {
+      Alert.alert("Login Failed", result.error);
+      return;
+    }
+
+    // Token is in result.data.access
+    // You can store it with SecureStore later
+
+    Alert.alert("Success", "Login Successful!");
+
+    router.push("/"); // redirect user to home/dashboard
+  }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
       
-      {/* HERO IMAGE */}
       <Image source={require('@/assets/images/medicine.jpg')} style={styles.hero} />
 
-      {/* HEADER */}
       <View style={styles.header}>
-        <Text style={styles.title}>Welcome <Text style={{ color: "#0056ff" }}>Back</Text></Text>
+        <Text style={styles.title}>Welcomes <Text style={{ color: "#0056ff" }}>Back</Text></Text>
         <Text style={styles.subtitle}>Login to continue using the app</Text>
       </View>
 
-      {/* FORM */}
       <View style={styles.card}>
         <TextInput
           placeholder="Email"
           style={styles.input}
           placeholderTextColor="#777"
+          keyboardType="email-address"
+          autoCapitalize="none"
           value={email}
           onChangeText={setEmail}
         />
@@ -39,17 +78,22 @@ export default function LoginScreen() {
         />
 
         <TouchableOpacity style={styles.linkRow}>
-          <Link href="/forgot-password?"  style={styles.forgot}>Forgot Password?</Link>
+          <Link href="/forgot-password" style={styles.forgot}>Forgot Password?</Link>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Login</Text>
+          )}
         </TouchableOpacity>
 
         <View style={styles.bottomRow}>
           <Text style={styles.bottomText}>Don't have an account?</Text>
           <Link href="/register" style={styles.signup}> Register</Link>
         </View>
+
         <Link href="/" style={styles.home}> Home</Link>
       </View>
 
@@ -142,6 +186,7 @@ const styles = StyleSheet.create({
     color: "#0056ff",
     fontWeight: "700",
   },
+
   home: {
     color: "#0056ff",
     fontWeight: "700",
